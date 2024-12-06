@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/my-timer/static/css/main.45c7fd02.css",
+    "main.js": "/my-timer/static/js/main.1f6048ae.js",
+    "static/js/453.6bf17412.chunk.js": "/my-timer/static/js/453.6bf17412.chunk.js",
+    "index.html": "/my-timer/index.html",
+    "main.45c7fd02.css.map": "/my-timer/static/css/main.45c7fd02.css.map",
+    "main.1f6048ae.js.map": "/my-timer/static/js/main.1f6048ae.js.map",
+    "453.6bf17412.chunk.js.map": "/my-timer/static/js/453.6bf17412.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.45c7fd02.css",
+    "static/js/main.1f6048ae.js"
+  ]
+}
