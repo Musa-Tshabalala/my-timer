@@ -30,7 +30,7 @@ const Session = (props) => {
 
 const Timer = (props) => {
   const timeoutColor = {
-    color: `${props.timeout ? 'Red' : 'white'}`
+    color: `${props.timeout ? 'Red' : 'rgb(200, 90, 0)'}`
   }
   return (
     <div id='timer'>
@@ -89,6 +89,13 @@ class App extends React.Component {
     this.setState((prevState) => ({
       breakLength: prevState.breakLength + 1,
     }));
+    if (this.state.isBreak) {
+      this.setState(prevState => ({
+        remainingBreakTime: (prevState.breakLength) * 60,
+        counter: this.formatTime((prevState.breakLength) * 60),
+        timeout: false
+      }))
+    }
   }
 
   IncrementSession() {
@@ -97,9 +104,14 @@ class App extends React.Component {
     if (length >= 60) return;
     this.setState((prevState) => ({
       sessionLength: prevState.sessionLength + 1,
-      remainingSessionTime: (prevState.sessionLength + 1) * 60,
-      counter: this.formatTime((prevState.sessionLength + 1) * 60),
     }));
+    if (!this.state.isBreak) {
+      this.setState(prevState => ({
+        remainingSessionTime: (prevState.sessionLength) * 60,
+        counter: this.formatTime((prevState.sessionLength) * 60),
+        timeout: false
+      }))
+    }
   }
 
   decrementBreak() {
@@ -109,6 +121,12 @@ class App extends React.Component {
     this.setState((prevState) => ({
       breakLength: prevState.breakLength - 1,
     }));
+    if (this.state.isBreak) {
+      this.setState(prevState => ({
+        remainingBreakTime: (prevState.breakLength) * 60,
+        counter: this.formatTime((prevState.breakLength) * 60),
+      }))
+    }
   }
 
   decrementSession() {
@@ -117,9 +135,14 @@ class App extends React.Component {
     if (length <= 1) return;
     this.setState((prevState) => ({
       sessionLength: prevState.sessionLength - 1,
-      remainingSessionTime: (prevState.sessionLength - 1) * 60,
-      counter: this.formatTime((prevState.sessionLength - 1) * 60),
     }));
+
+    if (!this.state.isBreak) {
+      this.setState(prevState => ({
+        remainingSessionTime: (prevState.sessionLength) * 60,
+        counter: this.formatTime((prevState.sessionLength) * 60),
+      }))
+    }
   }
 
   pauseTime() {
@@ -140,18 +163,20 @@ class App extends React.Component {
         if (!prevState.isBreak) {
           newTime = prevState.remainingSessionTime - 1;
 
-          if (newTime <= 30 && newTime % 2 === 0) {
+          if (newTime <= 30) {
             this.setState({timeout: true})
           } else {
             this.setState({timeout: false})
           }
-          
-          if (newTime < 0) {
+
+          if (newTime === 0) {
             const beep = this.Audio.current
             beep.src = "https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav"
             beep.play()
             .catch(err => console.error("Audio Playback Error:", err))
-
+          }
+          
+          if (newTime < 0) {
             return {
               isBreak: true,
               remainingBreakTime: prevState.breakLength * 60,
@@ -167,18 +192,20 @@ class App extends React.Component {
         } else {
           newTime = prevState.remainingBreakTime - 1;
 
-          if (newTime <= 30 && newTime % 2 === 0) {
+          if (newTime <= 30) {
             this.setState({timeout: true})
           } else {
             this.setState({timeout: false})
           }
 
-          if (newTime < 0) {
+          if (newTime === 0) {
             const beep = this.Audio.current
             beep.src = "https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav"
             beep.play()
             .catch(err => console.error("Audio Playback Error:", err))
+          }
 
+          if (newTime < 0) {
             return {
               isBreak: false,
               remainingSessionTime: prevState.sessionLength * 60,
@@ -216,6 +243,7 @@ class App extends React.Component {
       remainingSessionTime: 25 * 60,
       remainingBreakTime: 5 * 60,
       counter: '25:00',
+      timeout: false
     });
   }
 

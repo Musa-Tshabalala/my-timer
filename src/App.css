@@ -61,10 +61,19 @@ body {
 
 p {
   font-size: 30px;
+  font-weight: bold;
 }
 
 h2 {
   font-weight: bold;
+}
+
+#session-label, #break-label, p {
+  color: rgb(200, 90, 0);
+}
+
+#timer-label {
+  color: #000;
 }
 
 #timer {
@@ -73,6 +82,10 @@ h2 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#time-left {
+  font-family: sans-serif;
 }
 
 button {
@@ -101,14 +114,30 @@ button {
 
 .fa-solid {
   font-size: 20px;
+  color: #000;
+  transition: 0.5s ease-in-out;
 }
 
 .crements {
+  color: rgb(200, 90, 0);
   background-color: #000;
+  transition: 0.5s ease-in-out;
 }
 
 .crements:hover {
   background-color: rgb(200, 90, 0);
+  color:#000;
+  transition: 0.5s ease-in-out;
+}
+
+
+#reset:hover .fa-solid {
+  color: rgb(200, 90, 0);
+  transition: 0.5s ease-in-out;
+}
+
+#start_stop:hover .fa-solid {
+  color:rgb(200, 90, 0);
   transition: 0.5s ease-in-out;
 }
 
@@ -117,10 +146,25 @@ button {
   transition: 0.5s ease-in-out;
 }
 
+
 #time-left {
   background-color: #000;
   width: 70%;
   text-align: center;
   border-radius: 5%;
   font-weight: bold;
+}
+
+@media (max-width: 425px) {
+  #timer-container {
+    width: 80%
+  }
+  .session {
+    flex-wrap: wrap;
+  }
+
+  .session h2 {
+    font-size: 20px;
+    text-align: center;
+  }
 }
